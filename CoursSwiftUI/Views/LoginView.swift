@@ -26,7 +26,7 @@ struct LoginView: View {
                     .foregroundColor(.white)
                     .padding(.bottom, 30)
 
-                TextField("", text: $username, prompt: Text("Nom d'utilisateur").foregroundColor(.gray.opacity(0.7)))
+                TextField("Nom d'utilisateur", text: $username)
                     .padding()
                     .background(Color.white.opacity(0.8))
                     .cornerRadius(8)
@@ -34,7 +34,7 @@ struct LoginView: View {
                     .font(.system(size: 18, weight: .medium, design: .rounded))
                     .padding(.horizontal, 10)
 
-                SecureField("", text: $password, prompt: Text("Mot de passe").foregroundColor(.gray.opacity(0.7)))
+                SecureField("Mot de passe", text: $password)
                     .padding()
                     .background(Color.white.opacity(0.8))
                     .cornerRadius(8)
@@ -90,6 +90,7 @@ struct LoginView: View {
     private func checkLoginStatus() {
         if UserDefaults.standard.bool(forKey: "isLoggedIn") {
             isLoggedIn = true
+            username = UserDefaults.standard.string(forKey: "loggedInUsername") ?? ""
         }
     }
 }
