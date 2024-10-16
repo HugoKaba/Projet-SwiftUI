@@ -1,15 +1,20 @@
-//
-//  ContentView.swift
-//  CoursSwiftUI
-//
-//  Created by hugo Kaba on 15/10/2024.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isLoggedIn: Bool = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    
     var body: some View {
-        LoginView()
+        NavigationStack {
+            ZStack{
+                GradientWaveBackground()
+                    .ignoresSafeArea()
+                if !isLoggedIn {
+                    LoginView(isLoggedIn: $isLoggedIn)
+                } else {
+                    MenuView(isLoggedIn: $isLoggedIn)
+                }
+            }
+        }
     }
 }
 

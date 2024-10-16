@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct GradientWaveBackground: View {
+    @Environment(\.dismiss) var dismiss
+    var showBackButton: Bool = false
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -28,10 +31,27 @@ struct GradientWaveBackground: View {
                 .ignoresSafeArea()
             }
         }
+        .overlay(
+            HStack {
+                if showBackButton {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                            .font(.system(size: 24))
+                    }
+                    .padding()
+                }
+                Spacer()
+            }
+            .background(Color.clear)
+            .padding(.top, 50)
+            .zIndex(1), alignment: .topLeading
+        )
     }
 }
 
-// Définir la forme de vague
 struct WaveShape: Shape {
     var yOffset: CGFloat
     
