@@ -43,10 +43,16 @@ class FlappyBirdGameService: ObservableObject {
     
     func flap() {
         birdY -= flapHeight
+        if birdY < 0 {
+            birdY = 0
+        }
     }
     
     func applyGravity() {
         birdY += gravity
+        if birdY > 400 {
+            birdY = 400
+        }
     }
     
     func moveObstacles() {
