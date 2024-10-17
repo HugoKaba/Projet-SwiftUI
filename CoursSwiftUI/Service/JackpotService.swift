@@ -39,6 +39,7 @@ class JackpotService: ObservableObject {
     func increaseBet(by amount: Int) {
         if betAmount + amount <= credits {
             betAmount += amount
+            message = ""
         } else {
             message = "Vous ne pouvez pas miser plus de crédits que vous n'en avez!"
         }
@@ -47,8 +48,10 @@ class JackpotService: ObservableObject {
     func decreaseBet() {
         if betAmount > credits{
             betAmount = credits
+            message = ""
         }else if betAmount > 5 {
             betAmount -= 5
+            message = ""
         } else {
             message = "La mise ne peut pas être inférieure à 5 crédits!"
         }
@@ -66,7 +69,7 @@ class JackpotService: ObservableObject {
     }
 
     func resetGame() {
-        credits = 1000
+        credits = 250
         betAmount = 5
         reels = [0, 1, 2]
         message = ""

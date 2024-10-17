@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 class TrafficLightService: ObservableObject {
-    @Published var lights: [Light] = [.red, .red, .red]
+    @Published var lights: [TrafficLightState] = [.red, .red, .red]
     @Published var message: String = ""
     @Published var reactionTime: Double = 0
     @Published var isGameActive: Bool = false

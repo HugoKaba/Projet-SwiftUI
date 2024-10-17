@@ -3,8 +3,8 @@ import CoreData
 
 struct LoginView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @State var username: String = ""
-    @State var password: String = ""
+    @State private var username: String = ""
+    @State private var password: String = ""
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     @Binding var isLoggedIn: Bool
@@ -19,41 +19,16 @@ struct LoginView: View {
     var body: some View {
         VStack {
             Spacer()
-
             VStack(spacing: 20) {
                 Text("Connexion")
                     .font(.system(size: 32, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.bottom, 30)
 
-                TextField("Nom d'utilisateur", text: $username)
-                    .padding()
-                    .background(Color.white.opacity(0.8))
-                    .cornerRadius(8)
-                    .foregroundColor(.black)
-                    .font(.system(size: 18, weight: .medium, design: .rounded))
-                    .padding(.horizontal, 10)
+                CustomTextField(placeholder: "Nom d'utilisateur", text: $username)
+                CustomSecureField(placeholder: "Mot de passe", text: $password)
 
-                SecureField("Mot de passe", text: $password)
-                    .padding()
-                    .background(Color.white.opacity(0.8))
-                    .cornerRadius(8)
-                    .foregroundColor(.black)
-                    .font(.system(size: 18, weight: .medium, design: .rounded))
-                    .padding(.horizontal, 10)
-
-                Button(action: {
-                    loginUser()
-                }) {
-                    Text("Se connecter")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(10)
-                }
-                .padding(.top, 20)
+                CustomButton(title: "Se connecter", action: loginUser)
 
                 NavigationLink(destination: RegisterView()) {
                     Text("S'inscrire")
@@ -73,15 +48,12 @@ struct LoginView: View {
         .alert(isPresented: $showError) {
             Alert(title: Text("Erreur de connexion"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
         }
-        .onAppear {
-            checkLoginStatus()
-        }
+        .onAppear(perform: checkLoginStatus)
     }
 
-    func loginUser() {
+    private func loginUser() {
         if let error = authenticationService.login(username: username, password: password, context: viewContext) {
-            errorMessage = error
-            showError = true
+            showError(with: error)
         } else {
             isLoggedIn = true
         }
@@ -93,12 +65,17 @@ struct LoginView: View {
             username = UserDefaults.standard.string(forKey: "loggedInUsername") ?? ""
         }
     }
+
+    private func showError(with message: String) {
+        errorMessage = message
+        showError = true
+    }
 }
 
 #Preview {
     struct PreviewWrapper: View {
         @State private var isLoggedIn = false
-        
+
         var body: some View {
             LoginView(isLoggedIn: $isLoggedIn)
         }

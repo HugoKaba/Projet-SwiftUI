@@ -6,10 +6,6 @@ class MemoryGameService: ObservableObject {
     @Published var moves = 0
     private var firstCardIndex: Int?
     private var difficulty: Difficulty = .easy
-    
-    enum Difficulty {
-        case easy, medium, hard
-    }
 
     init() {
         setupGame(with: .easy)
