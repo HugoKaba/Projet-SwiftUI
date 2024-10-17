@@ -11,7 +11,8 @@ struct MenuView: View {
             AppInfo(name: "Traffic Light", imageName: "TrafficLight", view: AnyView(TrafficLightView(isLoggedIn: .constant(true)))),
             AppInfo(name: "Jeu de mémoire", imageName: "MemoryGame", view: AnyView(MemoryGameView(isLoggedIn: .constant(true)))),
             AppInfo(name: "Snake", imageName: "Snake", view: AnyView(SnakeGameView(isLoggedIn: .constant(true)))),
-            AppInfo(name: "Flappy Bird", imageName: "FlappyBird", view: AnyView(FlappyBirdGameView(isLoggedIn: .constant(true))))
+            AppInfo(name: "Flappy Bird", imageName: "FlappyBird", view: AnyView(FlappyBirdGameView(isLoggedIn: .constant(true)))),
+            AppInfo(name: "Calculatrice", imageName: "Calculatrice", view: AnyView(CalculatorView(isLoggedIn: .constant(true))))
         ]
     }()
 
